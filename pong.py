@@ -84,7 +84,7 @@ class PongGame:
             canvas_frame,
             width=self.CANVAS_WIDTH,
             height=self.CANVAS_HEIGHT,
-            bg='#1a252f',
+            bg='#FFFFFF',
             highlightthickness=2,
             highlightbackground='#34495e'
         )
@@ -137,7 +137,8 @@ class PongGame:
     def on_key_press(self, event):
         """Handle key press."""
         key = event.keysym.lower()
-        
+        if self.right_paddle_y - self.PADDLE_HEIGHT >= self.CANVAS_HEIGHT:
+            return
         if key == 'w':
             self.left_paddle_up = True
         elif key == 's':
@@ -162,16 +163,21 @@ class PongGame:
     
     def update_paddles(self):
         """Update paddle positions."""
+        left_too_high = self.left_paddle_y - self.PADDLE_HEIGHT / 2 <= 0
+        left_too_low = self.left_paddle_y + self.PADDLE_HEIGHT / 2 >= self.CANVAS_HEIGHT
+        right_too_high = self.right_paddle_y - self.PADDLE_HEIGHT / 2 <= 0
+        right_too_low = self.right_paddle_y + self.PADDLE_HEIGHT / 2 >= self.CANVAS_HEIGHT
         # Left paddle
-        if self.left_paddle_up:
+        # Left paddle
+        if self.left_paddle_up and not left_too_high:
             self.left_paddle_y -= self.PADDLE_SPEED
-        if self.left_paddle_down:
+        if self.left_paddle_down and not left_too_low:
             self.left_paddle_y += self.PADDLE_SPEED
         
         # Right paddle
-        if self.right_paddle_up:
+        if self.right_paddle_up and not right_too_high:
             self.right_paddle_y -= self.PADDLE_SPEED
-        if self.right_paddle_down:
+        if self.right_paddle_down and not right_too_low:
             self.right_paddle_y += self.PADDLE_SPEED
     
     def update_ball(self):
@@ -288,7 +294,7 @@ class PongGame:
         self.right_score = 0
         self.game_over = False
         self.draw_game()
-        self.game_loop()
+        # self.game_loop()
 
 
 if __name__ == "__main__":
