@@ -130,6 +130,7 @@ class Connect4Game:
         for row in range(self.ROWS - 1, -1, -1):
             if self.board[row, col] == self.EMPTY:
                 self.board[row, col] = self.current_player
+                self.update_display()
                 
                 # Check for win
                 if self.check_win(row, col):
@@ -168,7 +169,7 @@ class Connect4Game:
         while c < self.COLS and self.board[row, c] == player:
             count += 1
             c += 1
-        if count >= 3:
+        if count >= 4:
             return True
         
         # Check vertical
@@ -183,7 +184,7 @@ class Connect4Game:
         while r >= 0 and self.board[r, col] == player:
             count += 1
             r -= 1
-        if count >= 3:
+        if count >= 4:
             return True
         
         # Check diagonal (top-left to bottom-right)
@@ -200,7 +201,7 @@ class Connect4Game:
             count += 1
             r -= 1
             c += 1
-        if count >= 3:
+        if count >= 4:
             return True
         
         # Check diagonal (bottom-left to top-right)
@@ -217,7 +218,7 @@ class Connect4Game:
             count += 1
             r -= 1
             c += 1
-        if count >= 3:
+        if count >= 4:
             return True
         
         return False
