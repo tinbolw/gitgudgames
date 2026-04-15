@@ -71,7 +71,7 @@ class SnakeGame:
             canvas_frame,
             width=self.GRID_WIDTH * self.CELL_SIZE,
             height=self.GRID_HEIGHT * self.CELL_SIZE,
-            bg='#1a252f',
+            bg='#FFFFFF',
             highlightthickness=2,
             highlightbackground='#34495e'
         )
@@ -177,7 +177,6 @@ class SnakeGame:
             self.food = self.spawn_food()
         else:
             self.snake.pop()
-            self.snake.pop()
         
         self.draw_game()
     
@@ -227,6 +226,7 @@ class SnakeGame:
         """Handle game over."""
         self.game_over = True
         messagebox.showinfo("Game Over", f"Game Over! Final Score: {self.score}")
+        self.reset_game()
     
     def reset_game(self):
         """Reset the game to initial state."""
@@ -237,7 +237,6 @@ class SnakeGame:
         self.score = 0
         self.game_over = False
         self.draw_game()
-        self.game_loop()
 
 
 if __name__ == "__main__":
